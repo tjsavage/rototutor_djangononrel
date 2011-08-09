@@ -5,15 +5,17 @@ from djangoappengine.settings_base import *
 
 import os
 
-SECRET_KEY = '=r-$b*8hglm+858&9t043hlm6-&6-3d3vfc4((7yd0dbrakhvi'
+SECRET_KEY = '=r-skhe$*#Jdksh#*DHdhfsk9q(#*47hfkLdkh29dh8hdJShz'
 
 INSTALLED_APPS = (
 #    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    'django.contrib.admin',
     'djangotoolbox',
+    'schedule',
+    'accounts',
 
     # djangoappengine should come last, so it can override a few manage.py commands
     'djangoappengine',
@@ -39,8 +41,6 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
-
-SITE_ID = 29
 
 # Activate django-dbindexer if available
 try:
