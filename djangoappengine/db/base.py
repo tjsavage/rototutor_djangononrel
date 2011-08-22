@@ -80,12 +80,12 @@ class DatabaseOperations(NonrelDatabaseOperations):
 
     DEFAULT_MAX_DIGITS = 16
     def value_to_db_decimal(self, value, max_digits, decimal_places):
-        if value is None: 
+        if value is None:
             return None
         sign = value < 0 and u'-' or u''
-        if sign: 
+        if sign:
             value = abs(value)
-        if max_digits is None: 
+        if max_digits is None:
             max_digits = self.DEFAULT_MAX_DIGITS
 
         if decimal_places is None:
@@ -160,10 +160,18 @@ class DatabaseWrapper(NonrelDatabaseWrapper):
                 if handler.script == REMOTE_API_SCRIPT:
                     self.remote_api_path = handler.url.split('(', 1)[0]
                     break
+
         self.remote = True
-        remote_url = 'https://%s.appspot.com%s' % (self.remote_app_id,
-                                                   self.remote_api_path)
-        logging.info('Setting up remote_api for "%s" at %s' %
+        remote_app_setting = os.environ.get('REMOTE_APPLICATION')
+        if remote_app_setting:
+			remote_url = 'https://%s.appspot.com%s' % (remote_app_setting,
+				self.remote_api_path)
+			logging.info('Setting up remote_api for "%s" at %s' %
+				(remote_app_setting, remote_url))
+        else:
+			remote_url = 'https://%s.appspot.com%s' % (self.remote_app_id,
+				self.remote_api_path)
+			logging.info('Setting up remote_api for "%s" at %s' %
                      (self.remote_app_id, remote_url))
         if not have_appserver:
             print('Connecting to remote_api handler.\n\n'
@@ -171,9 +179,19 @@ class DatabaseWrapper(NonrelDatabaseWrapper):
                   'App Engine Dashboard if you have problems logging in. '
                   'Login is only supported for Google Accounts.\n')
         from google.appengine.ext.remote_api import remote_api_stub
-        remote_api_stub.ConfigureRemoteApi(self.remote_app_id,
-            self.remote_api_path, auth_func, secure=self.secure_remote_api,
-            rpc_server_factory=rpc_server_factory)
+
+        if remote_app_setting:
+			remote_api_stub.ConfigureRemoteApi(remote_app_setting,
+				self.remote_api_path, auth_func,
+				secure=self.secure_remote_api,
+				rpc_server_factory=rpc_server_factory,
+				servername=self.remote_app_id + ".appspot.com")
+        else:
+			remote_api_stub.ConfigureRemoteApi(self.remote_app_id,
+            self.remote_api_path, auth_func,
+			secure=self.secure_remote_api,
+            rpc_server_factory=rpc_server_factory) 
+
         retry_delay = 1
         while retry_delay <= 16:
             try:

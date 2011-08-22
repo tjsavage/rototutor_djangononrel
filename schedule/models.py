@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Tutor, Client
+from users.models import Tutor, Client
 
 class Session(models.Model):
     date = models.DateTimeField()

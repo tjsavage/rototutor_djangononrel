@@ -1,53 +1,38 @@
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-    dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}"
-    xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
-    lang="{% firstof LANGUAGE_CODE 'en' %}">
-  <head>
-    <title>{% block title %}{% endblock %} - Nonrel-testapp</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+	<title>{% block head_title %}Rototutor{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="description" content="{% block head_description %}Rototutor: We don't quit until it's totally clear.{% endblock %}" />
+	<meta name="keywords" content="{% block head_keywords %}Rototutor peer tutoring, Pacific Palisades{% endblock %}" />
+	<meta name="robots" content="index, follow" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="/static/css/screen.css" media="screen" />
+    {% block head_css %}{% endblock %}
+</head>
+<body>
+{% block body %}
+<div id="header">
+    {% block header %}
+	<h1>{% block header_h1 %}RotoTutor{% endblock %}</h1>
+	<h2>{% block header_h2 %}Helpful, experienced peer tutoring.{% endblock %}</h2>
+	<ul>{% block menu %}
+		<li><a href="/" class="active">Home</a></li>
+        <li><a href="/about">What We Do</a></li>
+        <li><a href="/tutors">Our Tutors</a></li>
+        <li><a href="/apply">Become a Tutor</a></li>
 
-    {% block css %}
+
     {% endblock %}
-
-    {% block preload_js %}
+    </ul>
     {% endblock %}
-
-    {% block extra-head %}{% endblock %}
-  </head>
-
-  <body>
-    <div id="header">
-      <a id="logo" href="/">Nonrel-testapp</a>
-    </div>
-
-    <div class="columns">
-      <div id="content" class="column">
-        {% block content-header %}
-          {% if error %}<div class="error">{{ error }}</div>{% endif %}
-          {% if info %}<div class="info">{{ info }}</div>{% endif %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="info">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-        {% endblock %}
-
-        {% block content %}{% endblock %}
-      </div>
-
-      <div id="sidebar" class="column">
-        {% block sidebar %}
-        {% endblock %}
-      </div>
-    </div>
-
-    <div id="footer">
-      <p>Powered by <a href="http://www.allbuttonspressed.com/projects/django-nonrel">Django-nonrel</a></p>
-    </div>
-
-    {% block js %}
-    {% endblock %}
-  </body>
+</div>
+{% block content %}
+{% endblock %}
+<div id="footer">
+{% block footer %}
+{% endblock %}
+</div>
+{% endblock %}
+</body>
 </html>

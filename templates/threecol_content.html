@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="colmask threecol">
+	<div class="colmid">
+		<div class="colleft">
+			<div class="col1">
+                <!-- Column 1 start -->
+                {% block col1 %}
+                {% endblock %}
+                <!-- Column 1 end -->
+			</div>
+			<div class="col2">
+				<!-- Column 2 start -->
+				{% block col2 %}
+                {% endblock %}
+                <!-- Column 2 end -->
+			</div>
+			<div class="col3">
+				<!-- Column 3 start -->
+				{% block col3 %}
+                {% endblock %}
+                <!-- Column 3 end -->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
